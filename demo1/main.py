@@ -1,7 +1,5 @@
 import pygame
-
 import random
-
 
 
 # 块超类
@@ -9,7 +7,6 @@ import random
 class Block:
 
     def __init__(self, pos_y):
-
         self.pos_y = pos_y
 
         self.pos_x = -60
@@ -18,12 +15,8 @@ class Block:
 
         self.b = 60
 
-
-
     def move(self, vel):
-
         self.pos_y += vel
-
 
 
 # 黑块类
@@ -42,8 +35,6 @@ class BlackBlock(Block):
 
         self.has_clicked = False
 
-
-
     def clicked(self):
 
         self.color = (190, 190, 190)
@@ -59,13 +50,11 @@ class BlackBlock(Block):
             return True
 
 
-
 # 白块类
 
 class WhiteBlock(Block):
 
     def __init__(self, pos_x, pos_y):
-
         super().__init__(pos_y=pos_y)
 
         self.pos_x = pos_x
@@ -76,10 +65,7 @@ class WhiteBlock(Block):
 
         self.has_clicked = False
 
-
-
     def clicked(self):
-
         self.color = (255, 0, 0)
 
         self.has_clicked = True
@@ -87,11 +73,9 @@ class WhiteBlock(Block):
         return False
 
 
-
 # 添加块的逻辑实现
 
 def add_blocks(pos_y=-100):
-
     blocks = [WhiteBlock(0, pos_y), WhiteBlock(60, pos_y), WhiteBlock(120, pos_y), WhiteBlock(180, pos_y)]
 
     black_block = BlackBlock(pos_y)
@@ -100,10 +84,10 @@ def add_blocks(pos_y=-100):
 
     return blocks
 
-#实现多次初始化
+
+# 实现多次初始化
 
 def init():
-
     global running, block_scr, score, start, game_over, level, v_n, v_list, game_over_has_played
 
     pygame.mixer.music.play(-1)
@@ -122,7 +106,7 @@ def init():
 
     level = score // 4
 
-    v_n = 0   #让块下落得更加丝滑
+    v_n = 0  # 让块下落得更加丝滑
 
     v_list = ([int(1.5 + level * 0.125)] * int((int(2.5 + level * 0.125) - (1.5 + level * 0.125)) // 0.125) +
 
@@ -135,9 +119,7 @@ def init():
         for j in range(i):
 
             for block in block_scr[j]:
-
                 block.pos_y += 100
-
 
 
 pygame.init()
@@ -171,7 +153,6 @@ while running:
     # 设置块的速度
 
     if score // 4 > level:
-
         level = score // 4
 
         v_list = ([int(1.5 + level * 0.125)] * int((int(2.5 + level * 0.125) - (1.5 + level * 0.125)) // 0.125) +
@@ -185,13 +166,11 @@ while running:
         v_n += 1
 
         if v_n == 8:
-
             v_n = 0
 
         for blank in block_scr:
 
             for block in blank:
-
                 block.move(v)
 
     else:
@@ -207,11 +186,9 @@ while running:
         for block in block_scr[0]:
 
             if not block.has_clicked:
-
                 n += 1
 
         if n == 4:
-
             game_over = True
 
             game_over_image = font.render('Game Over', True, (0, 255, 0))
@@ -229,7 +206,6 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
 
             if not start:
-
                 start = True
 
             mouse_x, mouse_y = event.pos
@@ -237,7 +213,6 @@ while running:
             if game_over:
 
                 if 0 < mouse_x < 20 and 0 < mouse_y < 20:
-
                     game_over = False
 
                     init()
@@ -279,7 +254,6 @@ while running:
     for blank in block_scr:
 
         for block in blank:
-
             pygame.draw.rect(screen, block.color, (block.pos_x, block.pos_y, block.b, block.a), 0)
 
     # 游戏结束显示字体,停放bgm
@@ -289,7 +263,6 @@ while running:
         pygame.mixer.music.stop()
 
         if not game_over_has_played:
-
             game_over_sound.play(0)
 
             game_over_has_played = True
